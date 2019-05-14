@@ -3,22 +3,20 @@ require("dotenv").config();
 var keys = require("./keys.js");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
-//var request = require('request');
-//var Omdb = require("node-ombd-api");
-//var omdb = new Omdb(keys.omdb);
-//var movieName = "";
 var axios = require("axios");
 var moment = require("moment");
 var fs = require("fs");
-//;
+
 
 
 var getArtistNames = function (artist) {
     return artist.name;
 };
 var getMeSpotify = function (songName) {
-    if (songName === undefined) {
-        songName = "I Want it That Way";
+    console.log("Checking Song Name", songName)
+    if (songName.length === 0) {
+        songName = "The Sign by Ace of Base";
+        
     }
 
     spotify.search(
@@ -50,22 +48,22 @@ var getMyBands = function (artist) {
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
     axios.get(queryURL).then(function (response) {
-            var jsonData = response.data;
+        var jsonData = response.data;
 
-            if (!jsonData.length) {
-                console.log("No results found for " + artist);
-                return;
-            }
-
-            console.log("Upcoming concerts for" + artist + ":");
-
-            for (var i = 0; i < jsonData.length; i++) {
-                var concert = jsonData[i];
-                console.log(concert.venue.city + "," + (concert.venue.region || concert.venue.country) +
-                    " at " + concert.venue.name + " " + moment(concert.datetime).format("MM/DD/YYYY")
-                );
-            }
+        if (!jsonData.length) {
+            console.log("No results found for " + artist);
+            return;
         }
+
+        console.log("Upcoming concerts for" + artist + ":");
+
+        for (var i = 0; i < jsonData.length; i++) {
+            var concert = jsonData[i];
+            console.log(concert.venue.city + "," + (concert.venue.region || concert.venue.country) +
+                " at " + concert.venue.name + " " + moment(concert.datetime).format("MM/DD/YYYY")
+            );
+        }
+    }
     );
 };
 var getMeMovie = function (movieName) {
@@ -91,7 +89,7 @@ var getMeMovie = function (movieName) {
 };
 
 var doWhatItSays = function () {
-    fs.readFile("random.txt", "utf8", function(error, data) {
+    fs.readFile("random.txt", "utf8", function (error, data) {
         console.log(data);
         var dataArr = data.split(",");
         if (dataArr.length === 2) {
@@ -104,6 +102,7 @@ var doWhatItSays = function () {
 };
 
 var pick = function (caseData, functionData) {
+    console.log("THIS IS WHAT THE USER WANTS", functionData);
     switch (caseData) {
         case "concert-this":
             getMyBands(functionData);
