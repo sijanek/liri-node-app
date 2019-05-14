@@ -68,16 +68,16 @@ spotify-this-song for "I Want it That Way,"
 
 ### Technologies
 
-Node.js
-Axios npm
-Request nmp
-DotEnv npm
-Moment npm
-JavavScript
-Node-Spotify API
-Bands in Town API
-OMDB API
-npm installer
+* Node.js
+* Axios npm
+* Request nmp
+* DotEnv npm
+* Moment npm
+* JavavScript
+* Node-Spotify API
+* Bands in Town API
+* OMDB API
+* npm installer
 
 
 
